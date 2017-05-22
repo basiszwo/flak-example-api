@@ -1,0 +1,6 @@
+# Kafka Configuration
+bootstrap.servers=localhost:9092
+
+# Leave untouched
+key.serializer=org.apache.kafka.common.serialization.StringSerializer
+value.serializer=org.apache.kafka.common.serialization.StringSerializer
