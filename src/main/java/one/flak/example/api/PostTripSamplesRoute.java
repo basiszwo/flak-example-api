@@ -12,7 +12,9 @@ public class PostTripSamplesRoute implements Route {
 
     private KafkaProducer<String, String> kafkaProducer;
 
-    public PostTripSamplesRoute(KafkaProducer<String, String> kafkaProducer) {
+    private static String kafkaTopic = "flak-example";
+
+    PostTripSamplesRoute(KafkaProducer<String, String> kafkaProducer) {
         this.kafkaProducer = kafkaProducer;
     }
 
@@ -36,7 +38,7 @@ public class PostTripSamplesRoute implements Route {
                 continue;
             }
 
-            ProducerRecord<String, String> record = new ProducerRecord<>("ioth", obj.toString());
+            ProducerRecord<String, String> record = new ProducerRecord<>(kafkaTopic, obj.toString());
 
             kafkaProducer.send(record);
         }
