@@ -34,9 +34,9 @@ public class PostTripSamplesRoute implements Route {
 
             JsonObject obj = e.getAsJsonObject();
 
-//            if(!hasValidLocation(obj.get("location"))) {
-//                continue;
-//            }
+            if(!hasValidLocation(obj.get("location"))) {
+                continue;
+            }
 
             ProducerRecord<String, String> record = new ProducerRecord<>(kafkaTopic, obj.toString());
 
