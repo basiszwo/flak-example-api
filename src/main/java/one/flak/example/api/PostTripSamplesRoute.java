@@ -11,11 +11,11 @@ import spark.Route;
 public class PostTripSamplesRoute implements Route {
 
     private KafkaProducer<String, String> kafkaProducer;
-
-    private static String kafkaTopic = "flak-example-new";
+    private String kafkaTopic;
 
     PostTripSamplesRoute(KafkaProducer<String, String> kafkaProducer) {
         this.kafkaProducer = kafkaProducer;
+        this.kafkaTopic = topic;
     }
 
     @Override
@@ -23,18 +23,18 @@ public class PostTripSamplesRoute implements Route {
 
         JsonElement element = new JsonParser().parse(request.body());
 
-        if(!element.isJsonArray()) {
+        if (!element.isJsonArray()) {
             throw new JsonIOException("This does not work.");
         }
 
-        for(JsonElement e : element.getAsJsonArray()) {
-            if(!e.isJsonObject()) {
+        for (JsonElement e : element.getAsJsonArray()) {
+            if (!e.isJsonObject()) {
                 continue;
             }
 
             JsonObject obj = e.getAsJsonObject();
 
-            if(!hasValidLocation(obj.get("location"))) {
+            if (!hasValidLocation(obj.get("location"))) {
                 continue;
             }
 
@@ -52,11 +52,11 @@ public class PostTripSamplesRoute implements Route {
     }
 
     private boolean hasValidLocation(JsonElement element) {
-        if(element == null || !element.isJsonObject()) {
+        if (element == null || !element.isJsonObject()) {
             return false;
         }
         JsonObject location = element.getAsJsonObject();
-        if(!location.has("latitude") || !location.has("longitude")) {
+        if (!location.has("latitude") || !location.has("longitude")) {
             return false;
         }
 

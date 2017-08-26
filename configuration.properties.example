@@ -1,6 +1,12 @@
 # Kafka Configuration
 bootstrap.servers=localhost:9092
 
+# Topic to post the samples to
+kafkaTopic=flak-example
+
+# delay in ms for producer send; defaults to 0
+# linger.ms=5
+
 # Leave untouched
 key.serializer=org.apache.kafka.common.serialization.StringSerializer
 value.serializer=org.apache.kafka.common.serialization.StringSerializer

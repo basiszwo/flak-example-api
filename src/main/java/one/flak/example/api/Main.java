@@ -12,11 +12,12 @@ import static spark.Spark.post;
 
 public class Main {
     private static KafkaProducer<String, String> kafkaProducer;
+    private static String kafkaTopic;
 
     public static void main(String[] args) {
         setupKafka(args);
 
-        post("/samples", new PostTripSamplesRoute(kafkaProducer));
+        post("/samples", new PostTripSamplesRoute(kafkaProducer, kafkaTopic));
 
         exception(Exception.class, (exception, request, response) -> {
             JsonObject obj = new JsonObject();
@@ -37,7 +38,10 @@ public class Main {
             props.load(reader);
         } catch (IOException e) {
             e.printStackTrace();
+            System.exit(1);
         }
+
+        kafkaTopic = props.getProperty("kafkaTopic", "flak-example");
 
         kafkaProducer = new KafkaProducer<String, String>(props);
     }
