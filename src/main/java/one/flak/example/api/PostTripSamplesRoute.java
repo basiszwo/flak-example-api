@@ -13,7 +13,7 @@ public class PostTripSamplesRoute implements Route {
     private KafkaProducer<String, String> kafkaProducer;
     private String kafkaTopic;
 
-    PostTripSamplesRoute(KafkaProducer<String, String> kafkaProducer) {
+    PostTripSamplesRoute(KafkaProducer<String, String> kafkaProducer, String topic) {
         this.kafkaProducer = kafkaProducer;
         this.kafkaTopic = topic;
     }
